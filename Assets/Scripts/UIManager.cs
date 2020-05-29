@@ -15,12 +15,16 @@ public class UIManager : MonoBehaviour
     [SerializeField] private int startYear;
     [SerializeField] private int endYear;
 
+    private Database database;
+
+    public Database Database { get { return database; } }
     public int StartYear { get { return startYear; } }
     public int EndYear { get { return endYear; } }
 
     private void Awake()
     {
         instance = this;
+        database = GetComponent<Database>();
     }
 
     private void Start()
