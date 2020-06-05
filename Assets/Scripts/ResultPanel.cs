@@ -8,7 +8,8 @@ public class ResultPanel : MonoBehaviour
 {
     [SerializeField] RectTransform menuRect;
     [SerializeField] RectTransform viewRect;
-    [SerializeField] WordCloudPanel wordCloudPanel;
+    [SerializeField] FrequencyGraphPanel frequencyGraphPanel;
+    [SerializeField] ScatterText scatterText;
 
     private Vector2 menuRectDeactivePos = new Vector2(0f, 500f);
     private Vector2 menuRectActivePos = new Vector2(0f, 0f);
@@ -21,9 +22,9 @@ public class ResultPanel : MonoBehaviour
 
         sequence.AppendCallback(() => Init())
             .Append(menuRect.DOAnchorPos(menuRectActivePos, 0.5f))
-            .AppendCallback(() => wordCloudPanel.AssignData())
             .Append(viewRect.DOAnchorPos(viewRectActivePos, 0.5f))
-            .AppendCallback(() => wordCloudPanel.Visualize());
+            .AppendCallback(() => frequencyGraphPanel.AssignData())
+            .AppendCallback(() => scatterText.Visualize());
     }
 
     private void Init()
@@ -31,5 +32,8 @@ public class ResultPanel : MonoBehaviour
         gameObject.SetActive(true);
         menuRect.anchoredPosition = menuRectDeactivePos;
         viewRect.anchoredPosition = viewRectDeactivePos;
+
+        RectTransform fgRect = frequencyGraphPanel.GetComponent<RectTransform>();
+        fgRect.anchoredPosition = new Vector2(fgRect.anchoredPosition.x, 0);
     }
 }

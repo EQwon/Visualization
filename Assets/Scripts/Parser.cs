@@ -33,4 +33,24 @@ public class Parser
 
         return netWord;
     }
+
+    public static List<Word> WordParser(TextAsset asset)
+    {
+        List<Word> ret = new List<Word>();
+
+        StringReader sr = new StringReader(asset.text);
+        string source = sr.ReadLine();
+        source = sr.ReadLine();
+
+        while (source != null)
+        {
+            string[] values = source.Split('\t');
+            Word word = new Word(values);
+            ret.Add(word);
+
+            source = sr.ReadLine();
+        }
+
+        return ret;
+    }
 }

@@ -8,11 +8,11 @@ public class WordCloud : MonoBehaviour
 {
     [SerializeField] private Text text;
 
-    private WordCloudPanel panel;
+    private FrequencyGraphPanel panel;
     private RectTransform rect;
     private string myWord;
 
-    public WordCloudPanel Panel { set { panel = value; } }
+    public FrequencyGraphPanel Panel { set { panel = value; } }
 
     public void Visualize(string word, Vector2 pos, float size)
     {

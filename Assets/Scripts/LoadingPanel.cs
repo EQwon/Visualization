@@ -18,7 +18,7 @@ public class LoadingPanel : MonoBehaviour
 
         sequence.AppendCallback(() => Init())
             .Append(GetComponent<RectTransform>().DOAnchorPos(panelActivePos, 0.5f))
-            .Append(calcText.DOText("연산중..!", 2f).SetEase(Ease.OutCubic).SetLoops(3, LoopType.Restart))
+            .Append(calcText.DOText("연산중..!", 2f).SetEase(Ease.OutCubic).SetLoops(1, LoopType.Restart))
             .AppendCallback(() => UIManager.instance.LoadingToResultPanel());
     }
 
