@@ -6,10 +6,8 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
-    [SerializeField] private StartPanel startPanel;
-    [SerializeField] private EndPanel endPanel;
-    [SerializeField] private LoadingPanel loadingPanel;
-    [SerializeField] private ResultPanel resultPanel;
+    [SerializeField] private GameObject prologue1;
+
 
     [Header("값")]
     [SerializeField] private int startYear;
@@ -29,31 +27,20 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        startPanel.gameObject.SetActive(false);
-        endPanel.gameObject.SetActive(false);
-        loadingPanel.gameObject.SetActive(false);
-        resultPanel.gameObject.SetActive(false);
-
-        startPanel.StartStartPanel();
+        prologue1.SetActive(true);
     }
 
     public void StartToEndPanel(int startYear)
     {
         this.startYear = startYear;
-        startPanel.EndStartPanel();
-        endPanel.StartEndPanel();
     }
 
     public void EndToLoadingPanel(int endYear)
     {
         this.endYear = endYear;
-        endPanel.EndEndPanel();
-        loadingPanel.StartLoadingPanel();
     }
 
     public void LoadingToResultPanel()
     {
-        loadingPanel.EndLoadingPanel();
-        resultPanel.StartResultPanel();
     }
 }
