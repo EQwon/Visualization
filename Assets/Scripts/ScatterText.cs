@@ -4,44 +4,73 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public struct ScatterData
+{
+    public int maxOld;
+    public int maxNow;
+    public Dictionary<string, WordFreq> data;
+
+    public ScatterData(int maxOld, int maxNow, Dictionary<string, WordFreq> data)
+    {
+        this.maxOld = maxOld;
+        this.maxNow = maxNow;
+        this.data = data;
+    }
+}
+
 public class ScatterText : MonoBehaviour
 {
     [SerializeField] private Transform plotTransform;
 
-    private int maxOld;
-    private int maxNow;
-    private int nowX;
-    private int oldY;
-    private float width = 800f;
-    private float height = 800f;
+    private ScatterData data;
+    private float width;
+    private float height;
 
     private List<GameObject> points = new List<GameObject>();
 
     [Header("Prefab")]
     [SerializeField] private GameObject pointPrefab;
 
+    public ScatterData ScatterData { set { data = value; } }
+
     public void Visualize()
     {
         DestroyAll();
 
-        //nowX = filter.value % 3;
-        //oldY = filter.value / 3;
+        width = plotTransform.GetComponent<RectTransform>().rect.width;
+        height = plotTransform.GetComponent<RectTransform>().rect.height;
 
-        maxOld = UIManager.instance.Database.MaxOld;
-        maxNow = UIManager.instance.Database.MaxNow;
-        int listCnt = 0;
+        int maxOld = data.maxOld;
+        int maxNow = data.maxNow;
 
-        Dictionary<string, WordFreq> target = UIManager.instance.Database.Scatter[nowX, oldY];
+        Dictionary<string, WordFreq> target = data.data;
 
         foreach(KeyValuePair<string, WordFreq> pair in target)
         {
             GameObject point = Instantiate(pointPrefab, plotTransform);
             points.Add(point);
             RectTransform pointRect = point.GetComponent<RectTransform>();
-            float posX = ((((float)pair.Value.nowCount / maxNow) - nowX * (1f / 3)) / (1f / 3)) * width + Random.Range(-30f, 30f);
-            float posY = ((((float)pair.Value.oldCount / maxOld) - oldY * (1f / 3)) / (1f / 3)) * height + Random.Range(-30f, 30f);
+            Text text = point.GetComponentInChildren<Text>();
+            float ratioX = (float)pair.Value.nowCount / maxNow;
+            float ratioY = (float)pair.Value.oldCount / maxOld;
+            float posX = ratioX * width;
+            float posY = ratioY * height;
+            
             pointRect.anchoredPosition = new Vector2(posX, 0);
-            pointRect.DOAnchorPosY(posY, 0.5f);
+            text.text = "";
+
+            Sequence sequence = DOTween.Sequence();
+
+            sequence.Append(pointRect.DOAnchorPosY(posY, 0.5f))
+                .AppendCallback(() => text.text = pair.Key);
+
+            if (((int)(ratioX * 100) - 2) / 33 != ((int)(ratioY * 100) - 2) / 33)
+            {
+                Image image = point.GetComponent<Image>();
+                Color color = new Color(0.8f, 0.35f, 0.47f);
+                sequence.Append(image.DOColor(color, 0.5f))
+                    .Insert(0.5f, text.DOColor(color, 0.5f));
+            }
         }
     }
 

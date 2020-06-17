@@ -53,4 +53,33 @@ public class Parser
 
         return ret;
     }
+
+    public static ScatterData ScatterParser(TextAsset asset)
+    {
+        Dictionary<string, WordFreq> data = new Dictionary<string, WordFreq>();
+        int maxOld = 0, maxNow = 0;
+
+        StringReader sr = new StringReader(asset.text);
+        sr.ReadLine();
+        string source = sr.ReadLine();
+
+        while (source != null)
+        {
+            string[] values = source.Split(',');
+            string word = values[0];
+            int oldCnt = 0, nowCnt = 0;
+
+            for (int i = 1; i <= 20; i++) oldCnt += int.Parse(values[i]);
+            for (int i = 21; i <= 30; i++) nowCnt += int.Parse(values[i]);
+
+            maxOld = maxOld > oldCnt ? maxOld : oldCnt;
+            maxNow = maxNow > nowCnt ? maxNow : nowCnt;
+
+            data.Add(word, new WordFreq(oldCnt, nowCnt));
+
+            source = sr.ReadLine();
+        }
+
+        return new ScatterData(maxOld, maxNow, data);
+    }
 }
