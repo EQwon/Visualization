@@ -53,8 +53,23 @@ public class ScatterText : MonoBehaviour
             Text text = point.GetComponentInChildren<Text>();
             float ratioX = (float)pair.Value.nowCount / maxNow;
             float ratioY = (float)pair.Value.oldCount / maxOld;
-            float posX = ratioX * width;
             float posY = ratioY * height;
+            float posX;
+
+            if (ratioY == 0)
+            {
+                posX = width + Random.Range(-50f, 50f);
+            }
+            else
+            {
+                float r = ratioX / ratioY;
+                if (r <= 1) posX = 0.5f * r * (width - 100f);
+                else
+                {
+                    posX = (0.5f + (r - 1) / 3f) * (width - 100f);
+                    if (posX > width) posX = width - 50f;
+                }
+            }
             
             pointRect.anchoredPosition = new Vector2(posX, 0);
             text.text = "";
@@ -64,7 +79,21 @@ public class ScatterText : MonoBehaviour
             sequence.Append(pointRect.DOAnchorPosY(posY, 0.5f))
                 .AppendCallback(() => text.text = pair.Key);
 
-            if (((int)(ratioX * 100) - 2) / 33 != ((int)(ratioY * 100) - 2) / 33)
+            /*if (((int)(ratioX * 100) - 2) / 33 != ((int)(ratioY * 100) - 2) / 33)
+            {
+                Image image = point.GetComponent<Image>();
+                Color color = new Color(0.8f, 0.35f, 0.47f);
+                sequence.Append(image.DOColor(color, 0.5f))
+                    .Insert(0.5f, text.DOColor(color, 0.5f));
+            }*/
+            if (posX < 800f / 3)
+            {
+                Image image = point.GetComponent<Image>();
+                Color color = new Color(0.39f, 0.45f, 0.8f); 
+                sequence.Append(image.DOColor(color, 0.5f))
+                    .Insert(0.5f, text.DOColor(color, 0.5f));
+            }
+            else if (posX > 1600f / 3)
             {
                 Image image = point.GetComponent<Image>();
                 Color color = new Color(0.8f, 0.35f, 0.47f);

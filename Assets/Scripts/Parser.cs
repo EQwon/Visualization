@@ -82,4 +82,24 @@ public class Parser
 
         return new ScatterData(maxOld, maxNow, data);
     }
+
+    public static List<Node> BigramParser(TextAsset asset)
+    {
+        List<Node> nodes = new List<Node>();
+
+        StringReader sr = new StringReader(asset.text);
+        string source = sr.ReadLine();
+
+        while (source != null)
+        {
+            string[] values = source.Split(',');
+            Node node = new Node(values[0], values[1]);
+
+            nodes.Add(node);
+
+            source = sr.ReadLine();
+        }
+
+        return nodes;
+    }
 }
