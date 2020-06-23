@@ -79,13 +79,6 @@ public class ScatterText : MonoBehaviour
             sequence.Append(pointRect.DOAnchorPosY(posY, 0.5f))
                 .AppendCallback(() => text.text = pair.Key);
 
-            /*if (((int)(ratioX * 100) - 2) / 33 != ((int)(ratioY * 100) - 2) / 33)
-            {
-                Image image = point.GetComponent<Image>();
-                Color color = new Color(0.8f, 0.35f, 0.47f);
-                sequence.Append(image.DOColor(color, 0.5f))
-                    .Insert(0.5f, text.DOColor(color, 0.5f));
-            }*/
             if (posX < 800f / 3)
             {
                 Image image = point.GetComponent<Image>();

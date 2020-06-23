@@ -102,4 +102,24 @@ public class Parser
 
         return nodes;
     }
+
+    public static List<FrequencyData> FrequencyParser(TextAsset asset)
+    {
+        List<FrequencyData> datas = new List<FrequencyData>();
+
+        StringReader sr = new StringReader(asset.text);
+        string source = sr.ReadLine();
+
+        while (source != null)
+        {
+            string[] values = source.Split('\t');
+            FrequencyData data = new FrequencyData(int.Parse(values[1]), int.Parse(values[2]), values[0]);
+
+            datas.Add(data);
+
+            source = sr.ReadLine();
+        }
+
+        return datas;
+    }
 }

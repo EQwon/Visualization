@@ -45,7 +45,6 @@ public struct WordFreq
 
 public class Database : MonoBehaviour
 {
-    [SerializeField] private TextAsset dummyAsset;
     private List<Word> words;
     Dictionary<string, WordFreq>[,] scatter;
     // Dict는 한 년도의 단어들의 딕셔너리
@@ -65,8 +64,6 @@ public class Database : MonoBehaviour
 
     private IEnumerator DataRoutine()
     {
-        words = Parser.WordParser(dummyAsset);
-
         yield return new WaitUntil(() => words.Count != 0);
 
         scatter = GetScatterData();

@@ -8,7 +8,11 @@ public class Analysis : Panel
 {
     [Header("Scatter Text")]
     [SerializeField] private ScatterText scatter;
-    [SerializeField] private TextAsset asset;
+    [SerializeField] private TextAsset scatterAsset;
+
+    [Header("Frequency")]
+    [SerializeField] private Frequency frequency;
+    [SerializeField] private TextAsset frequencyAsset;
 
     [Header("UI Elements")]
     [SerializeField] private Text title;
@@ -20,7 +24,8 @@ public class Analysis : Panel
 
     private void Start()
     {
-        scatter.ScatterData = Parser.ScatterParser(asset);
+        scatter.ScatterData = Parser.ScatterParser(scatterAsset);
+        frequency.FrequencyData = Parser.FrequencyParser(frequencyAsset);
     }
 
     public override void OnEnable()
@@ -29,7 +34,7 @@ public class Analysis : Panel
         title.color = Color.clear;
         desc.rectTransform.anchoredPosition -= new Vector2(0, 200f);
         desc.color = Color.clear;
-        resultPanel.anchoredPosition -= new Vector2(0, 1000f);
+        resultPanel.anchoredPosition -= new Vector2(0, 1500f);
 
         Sequence sequence = DOTween.Sequence();
         float duration = 0.5f;
@@ -38,7 +43,7 @@ public class Analysis : Panel
             .Insert(0, title.DOColor(Color.black, duration))
             .Append(desc.rectTransform.DOAnchorPosY(desc.rectTransform.anchoredPosition.y + 200f, duration))
             .Insert(duration, desc.DOColor(Color.black, duration))
-            .Append(resultPanel.DOAnchorPosY(resultPanel.anchoredPosition.y + 1000f, duration))
+            .Append(resultPanel.DOAnchorPosY(resultPanel.anchoredPosition.y + 1500f, duration))
             .AppendCallback(() => scatter.Visualize());
     }
 
@@ -66,6 +71,8 @@ public class Analysis : Panel
         else if (i == 1)
         { }
         else
-        { }
+        {
+            sequence.AppendCallback(() => frequency.Visualize());
+        }
     }
 }

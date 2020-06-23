@@ -8,7 +8,7 @@ public class ResultPanel : MonoBehaviour
 {
     [SerializeField] RectTransform menuRect;
     [SerializeField] RectTransform viewRect;
-    [SerializeField] FrequencyGraphPanel frequencyGraphPanel;
+    [SerializeField] Frequency frequencyGraphPanel;
     [SerializeField] ScatterText scatterText;
 
     private Vector2 menuRectDeactivePos = new Vector2(0f, 500f);
@@ -23,7 +23,6 @@ public class ResultPanel : MonoBehaviour
         sequence.AppendCallback(() => Init())
             .Append(menuRect.DOAnchorPos(menuRectActivePos, 0.5f))
             .Append(viewRect.DOAnchorPos(viewRectActivePos, 0.5f))
-            .AppendCallback(() => frequencyGraphPanel.AssignData())
             .AppendCallback(() => scatterText.Visualize());
     }
 
