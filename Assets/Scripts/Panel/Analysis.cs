@@ -54,7 +54,7 @@ public class Analysis : Panel
     public void Focus(int i)
     {
         float barPosX = 310f * (i - 1);
-        float graphPosX = -1200f * i;
+        float graphPosX = -1200f * (i - 1);
         foreach (Text text in subheadings) text.color = new Color(0, 0, 0, 0.45f);
         Text subheading = subheadings[i];
 

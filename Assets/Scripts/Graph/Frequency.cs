@@ -41,7 +41,7 @@ public class Frequency : MonoBehaviour
             FrequencyData data = frequencyData[i];
             Bar bar = Instantiate(barPrefab, frequencyGraphTransform).GetComponent<Bar>();
             bars.Add(bar);
-            bar.Visualize(i, data.word, data.oldCnt + data.nowCnt, maxCnt);
+            bar.Visualize(i, data.word, data.oldCnt, data.nowCnt, maxCnt);
         }
     }
 

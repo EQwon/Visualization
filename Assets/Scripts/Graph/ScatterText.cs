@@ -38,7 +38,7 @@ public class ScatterText : MonoBehaviour
         DestroyAll();
 
         width = plotTransform.GetComponent<RectTransform>().rect.width;
-        height = plotTransform.GetComponent<RectTransform>().rect.height;
+        height = plotTransform.GetComponent<RectTransform>().rect.height - 30f;
 
         int maxOld = data.maxOld;
         int maxNow = data.maxNow;

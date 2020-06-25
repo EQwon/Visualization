@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: Nabibobettau
-  productName: Visualization
+  productName: GujiGuji
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -277,7 +277,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 1023b63c5f6e5c14cb421e5ab42a6c6e, type: 3}
+      m_Icon: {fileID: 2800000, guid: 9d9d6bd85e57b524e8792e2553881168, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
